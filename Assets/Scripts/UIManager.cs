@@ -10,25 +10,28 @@ public enum Menu
 }
 public class UIManager : MonoBehaviour
 {
+    
     public List<Interface> navigationHistory;
-    public GameObject[] menuGameObjects;
+    public List<GameObject> menuGameObjects;
     public Canvas parentCanvas;
     
     void Start()
     { 
-        InitializeMenus();
-        navigationHistory.Append(new Interface { menu = Menu.Start,  gameObject = menuGameObjects[0] });
+        InitializeMenuGameObjects();
+        //navigationHistory.Add(new Interface { menu = Menu.Start,  gameObject = menuGameObjects[0] });
     }
 
-    public void InitializeMenus()
+    public void InitializeMenuGameObjects()
     {
-        while (menuGameObjects.Length < parentCanvas.transform.childCount -1) menuGameObjects.Append(null);
-        for (var i = 0; i < parentCanvas.transform.childCount -1; i++)
+        while (menuGameObjects.Count < parentCanvas.transform.childCount - 1)
         {
-            if (parentCanvas.transform.GetChild(i).gameObject.GetComponent<Canvas>())
-            {
-                menuGameObjects[i] = parentCanvas.transform.GetChild(i).gameObject;
-            }
+            menuGameObjects.Add(null);
+            navigationHistory.Add(new  Interface());
+        }
+        for (int i = 1; i < parentCanvas.transform.childCount -1; i++)
+        {
+            menuGameObjects[i] = parentCanvas.transform.GetChild(i).gameObject;
+            navigationHistory[i].gameObject = menuGameObjects[i];
         }
     }
     public void ToggleMenuStatus(Menu menuToToggle)
@@ -49,7 +52,7 @@ public class UIManager : MonoBehaviour
     {
         if (navigationHistory.Contains(@interface)) return;
         
-        navigationHistory.Append(@interface);
+        navigationHistory.Add(@interface);
         @interface.gameObject.SetActive(true);
     }
 
@@ -62,6 +65,7 @@ public class UIManager : MonoBehaviour
     }
 }
 
+[System.Serializable]
 public class Interface
 {
     public Menu menu;
