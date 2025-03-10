@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class UIManager : MonoBehaviour
 {
     
     public List<Interface> navigationHistory;
+    public List<Interface> interfaces;
     public List<GameObject> menuGameObjects;
     public Canvas parentCanvas;
     
@@ -19,19 +21,31 @@ public class UIManager : MonoBehaviour
     { 
         InitializeMenuGameObjects();
         //navigationHistory.Add(new Interface { menu = Menu.Start,  gameObject = menuGameObjects[0] });
+        //OpenMenu(Menu.Start);
     }
 
     public void InitializeMenuGameObjects()
     {
-        while (menuGameObjects.Count < parentCanvas.transform.childCount - 1)
+        while (menuGameObjects.Count < parentCanvas.transform.childCount - 1)// "i - 1" to offset for the "Other" GameObject in the root Canvas
         {
             menuGameObjects.Add(null);
-            navigationHistory.Add(new  Interface());
+            interfaces.Add(new Interface());
         }
-        for (int i = 1; i < parentCanvas.transform.childCount -1; i++)
+        for (int i = 0; i < parentCanvas.transform.childCount -1; i++)
         {
-            menuGameObjects[i] = parentCanvas.transform.GetChild(i).gameObject;
-            navigationHistory[i].gameObject = menuGameObjects[i];
+            menuGameObjects[i] = parentCanvas.transform.GetChild(i + 1).gameObject; // "i + 1" to offset for the "Other" GameObject in the root Canvas
+            interfaces[i].gameObject = menuGameObjects[i];
+            
+            string menuName = menuGameObjects[i].name.Split(" ")[0];
+            
+            if (Enum.TryParse(menuName, out Menu parsedMenu)) // attempts to convert menuName into a Menu enum value
+            {
+                interfaces[i].menu = parsedMenu;
+            }
+            else
+            {
+                Debug.LogWarning($"Menu name '{menuName}' does not match any value in the Menu enum.");
+            }
         }
     }
     public void ToggleMenuStatus(Menu menuToToggle)
