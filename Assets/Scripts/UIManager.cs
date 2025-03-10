@@ -1,17 +1,29 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public enum Menu
 {
+    None,
     Start,
     Settings,
 }
 public class UIManager : MonoBehaviour
 {
-    
+    public static UIManager instance {get; private set;}
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     public List<Interface> navigationHistory;
     public List<Interface> interfaces;
     public List<GameObject> menuGameObjects;
@@ -20,8 +32,7 @@ public class UIManager : MonoBehaviour
     void Start()
     { 
         InitializeMenuGameObjects();
-        //navigationHistory.Add(new Interface { menu = Menu.Start,  gameObject = menuGameObjects[0] });
-        //OpenMenu(Menu.Start);
+        OpenMenu(Menu.Start);
     }
 
     public void InitializeMenuGameObjects()
@@ -31,7 +42,7 @@ public class UIManager : MonoBehaviour
             menuGameObjects.Add(null);
             interfaces.Add(new Interface());
         }
-        for (int i = 0; i < parentCanvas.transform.childCount -1; i++)
+        for (int i = 0; i < parentCanvas.transform.childCount - 1; i++)
         {
             menuGameObjects[i] = parentCanvas.transform.GetChild(i + 1).gameObject; // "i + 1" to offset for the "Other" GameObject in the root Canvas
             interfaces[i].gameObject = menuGameObjects[i];
@@ -48,6 +59,55 @@ public class UIManager : MonoBehaviour
             }
         }
     }
+
+    public Interface ReturnMenu(Menu menu)
+    {
+        Interface returnMenu = new();
+        
+        for (int i = 0; i < parentCanvas.transform.childCount - 1; i++)
+        {
+            if (parentCanvas.transform.GetChild(i).gameObject.name.Split(" ")[0] == menu.ToString())
+            {
+                returnMenu.gameObject = parentCanvas.transform.GetChild(i).gameObject;
+                
+                string menuName = returnMenu.gameObject.name.Split(" ")[0];
+            
+                if (Enum.TryParse(menuName, out Menu parsedMenu))
+                {
+                    returnMenu.menu = parsedMenu;
+                }
+                else
+                {
+                    Debug.LogWarning($"Menu name '{menuName}' does not match any value in the Menu enum.");
+                }
+
+                break;
+            }
+        }
+        return returnMenu;
+    }
+
+    public void GoBack()
+    {
+        if (navigationHistory.Count == 1) return;
+        
+        CloseMenu(navigationHistory[^1].menu);
+        OpenMenu(navigationHistory[^1].menu);
+    }
+
+    public void CloseAllMenus()
+    {
+        for (int i = 1; i < navigationHistory.Count - 1; i++)
+        {
+            string menuName = navigationHistory[i].gameObject.name.Split(" ")[0];
+            
+            if (Enum.TryParse(menuName, out Menu parsedMenu))
+            {
+                CloseMenu(parsedMenu);
+            }
+            
+        }
+    }
     public void ToggleMenuStatus(Menu menuToToggle)
     {
         
@@ -62,16 +122,20 @@ public class UIManager : MonoBehaviour
         
     }
 
-    public void OpenMenu(Interface @interface)
+    public void OpenMenu(Menu menu)
     {
+        Interface @interface = ReturnMenu(menu);
+        
+        @interface.gameObject.SetActive(true); // Above the return so that GoBack() can call this method and open the last menu correctly
         if (navigationHistory.Contains(@interface)) return;
         
         navigationHistory.Add(@interface);
-        @interface.gameObject.SetActive(true);
     }
 
-    public void CloseMenu(Interface @interface)
+    public void CloseMenu(Menu menu)
     {
+        Interface @interface = ReturnMenu(menu);
+        
         if(!navigationHistory.Contains(@interface)) return;
         
         navigationHistory.Remove(@interface);
@@ -79,7 +143,7 @@ public class UIManager : MonoBehaviour
     }
 }
 
-[System.Serializable]
+[Serializable]
 public class Interface
 {
     public Menu menu;
