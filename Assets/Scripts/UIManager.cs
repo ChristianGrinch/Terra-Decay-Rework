@@ -66,8 +66,10 @@ public class UIManager : MonoBehaviour
         
         for (int i = 0; i < parentCanvas.transform.childCount - 1; i++)
         {
+            Debug.Log($"{parentCanvas.transform.GetChild(i).gameObject.name.Split(" ")[0]} + {menu.ToString()}");
             if (parentCanvas.transform.GetChild(i).gameObject.name.Split(" ")[0] == menu.ToString())
             {
+                Debug.Log("Ran inside if.");
                 returnMenu.gameObject = parentCanvas.transform.GetChild(i).gameObject;
                 
                 string menuName = returnMenu.gameObject.name.Split(" ")[0];
@@ -82,6 +84,10 @@ public class UIManager : MonoBehaviour
                 }
 
                 break;
+            }
+            else
+            {
+                Debug.Log("");
             }
         }
         return returnMenu;
@@ -125,7 +131,7 @@ public class UIManager : MonoBehaviour
     public void OpenMenu(Menu menu)
     {
         Interface @interface = ReturnMenu(menu);
-        
+        Debug.Log($"{@interface.menu} + {@interface.gameObject.name}");
         @interface.gameObject.SetActive(true); // Above the return so that GoBack() can call this method and open the last menu correctly
         if (navigationHistory.Contains(@interface)) return;
         
