@@ -6,6 +6,6 @@ public class StartUI : MonoBehaviour
     public Button settingsBtn;
     void Start()
     {
-        settingsBtn.onClick.AddListener(() => UIManager.instance.OpenMenu(Menu.Settings));
+        settingsBtn.onClick.AddListener(() => UIManager.Instance.OpenMenu(Menu.Settings));
     }
 }

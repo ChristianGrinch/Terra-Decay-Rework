@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum Menu
@@ -10,12 +11,12 @@ public enum Menu
 }
 public class UIManager : MonoBehaviour
 {
-    public static UIManager instance {get; private set;}
-    void Awake()
+    public static UIManager Instance {get; private set;}
+    private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -29,13 +30,13 @@ public class UIManager : MonoBehaviour
     public List<GameObject> menuGameObjects;
     public Canvas parentCanvas;
     
-    void Start()
+    private void Start()
     { 
         InitializeMenuGameObjects();
         OpenMenu(Menu.Start);
     }
 
-    public void InitializeMenuGameObjects()
+    private void InitializeMenuGameObjects()
     {
         while (menuGameObjects.Count < parentCanvas.transform.childCount - 1)// "i - 1" to offset for the "Other" GameObject in the root Canvas
         {
@@ -60,11 +61,11 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public Interface ReturnMenu(Menu menu)
+    private Interface ReturnMenu(Menu menu)
     {
         Interface returnMenu = new();
         
-        for (int i = 0; i < parentCanvas.transform.childCount - 1; i++)
+        for (int i = 1; i < parentCanvas.transform.childCount; i++)
         {
             Debug.Log($"{parentCanvas.transform.GetChild(i).gameObject.name.Split(" ")[0]} + {menu.ToString()}");
             if (parentCanvas.transform.GetChild(i).gameObject.name.Split(" ")[0] == menu.ToString())
@@ -142,9 +143,22 @@ public class UIManager : MonoBehaviour
     {
         Interface @interface = ReturnMenu(menu);
         
-        if(!navigationHistory.Contains(@interface)) return;
+        bool isThere = false;
+        foreach (Interface navigationElement in navigationHistory)
+        {
+            // If the menu trying to be closed is not in navigation history, return
+            isThere = navigationElement.menu == @interface.menu;
+        }
+        if (!isThere) return;
         
-        navigationHistory.Remove(@interface);
+        foreach (Interface navigationElement in navigationHistory.ToList())
+        {
+            if (navigationElement.menu == @interface.menu)
+            {
+                navigationHistory.Remove(navigationElement);
+                break;
+            }
+        }
         @interface.gameObject.SetActive(false);
     }
 }

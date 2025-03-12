@@ -1,16 +1,12 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SettingsUI : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [Header("Buttons")] 
+    public Button goBackBtn;
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        goBackBtn.onClick.AddListener(() => UIManager.Instance.CloseMenu(Menu.Settings));
     }
 }
