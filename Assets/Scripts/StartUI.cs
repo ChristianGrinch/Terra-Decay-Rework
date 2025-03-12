@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class StartUI : MonoBehaviour
 {
+    [Header("Buttons")]
     public Button settingsBtn;
     void Start()
     {

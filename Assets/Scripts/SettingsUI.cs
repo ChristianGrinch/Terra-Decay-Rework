@@ -5,8 +5,29 @@ public class SettingsUI : MonoBehaviour
 {
     [Header("Buttons")] 
     public Button goBackBtn;
-    void Start()
+    public Button audioBtn;
+    public Button videoBtn;
+    [Header("Panels")]
+    public GameObject audioPanel;
+    public GameObject videoPanel;
+
+    public GameObject currentPanel = null;
+    private void Start()
     {
         goBackBtn.onClick.AddListener(() => UIManager.Instance.CloseMenu(Menu.Settings));
+        audioBtn.onClick.AddListener(() => OpenPanel(audioPanel));
+        videoBtn.onClick.AddListener(() =>  OpenPanel(videoPanel));
+    }
+
+    private void OpenPanel(GameObject panel)
+    {
+        if(currentPanel != null) ClosePanel();
+        currentPanel = panel;
+        currentPanel.SetActive(true);
+    }
+    private void ClosePanel()
+    {
+        currentPanel.SetActive(false);
+        currentPanel = null;
     }
 }
