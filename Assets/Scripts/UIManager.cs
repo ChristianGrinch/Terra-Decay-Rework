@@ -8,6 +8,7 @@ public enum Menu
     None,
     Start,
     Settings,
+    Saves,
 }
 public class UIManager : MonoBehaviour
 {
@@ -99,7 +100,7 @@ public class UIManager : MonoBehaviour
         if (navigationHistory.Count == 1) return;
         
         CloseMenu(navigationHistory[^1].menu);
-        OpenMenu(navigationHistory[^1].menu);
+        //OpenMenu(navigationHistory[^1].menu);
     }
 
     public void CloseAllMenus()

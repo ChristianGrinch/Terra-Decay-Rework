@@ -14,7 +14,7 @@ public class SettingsUI : MonoBehaviour
     public GameObject currentPanel = null;
     private void Start()
     {
-        goBackBtn.onClick.AddListener(() => UIManager.Instance.CloseMenu(Menu.Settings));
+        goBackBtn.onClick.AddListener(() => UIManager.Instance.GoBack());
         audioBtn.onClick.AddListener(() => OpenPanel(audioPanel));
         videoBtn.onClick.AddListener(() =>  OpenPanel(videoPanel));
     }
