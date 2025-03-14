@@ -2118,7 +2118,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 699101810}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.990674
+  m_Size: 0.99970955
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5689,8 +5689,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -20, y: 70}
-  m_SizeDelta: {x: 175, y: 75}
+  m_AnchoredPosition: {x: -20, y: 10}
+  m_SizeDelta: {x: 175, y: 65}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &826995694
 MonoBehaviour:
@@ -6637,7 +6637,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 50, y: 0}
-  m_SizeDelta: {x: 750, y: 980}
+  m_SizeDelta: {x: 925, y: 980}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &923254742
 MonoBehaviour:
@@ -7261,8 +7261,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 10
-    m_Right: 10
+    m_Left: 15
+    m_Right: 15
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 1
@@ -8947,7 +8947,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00042752633}
+  m_AnchoredPosition: {x: 0, y: 0.00024919072}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1101371198
@@ -10436,8 +10436,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 20, y: 100}
-  m_SizeDelta: {x: 200, y: 40}
+  m_AnchoredPosition: {x: 20, y: 20}
+  m_SizeDelta: {x: 250, y: 50}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1422607922
 MonoBehaviour:
@@ -11615,7 +11615,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -50, y: 0}
-  m_SizeDelta: {x: 980, y: 980}
+  m_SizeDelta: {x: 850, y: 980}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1717515627
 MonoBehaviour:
@@ -13486,7 +13486,7 @@ GameObject:
   - component: {fileID: 2098554076}
   - component: {fileID: 2098554075}
   m_Layer: 5
-  m_Name: Difficulty Select
+  m_Name: Difficulty Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13509,11 +13509,11 @@ RectTransform:
   - {fileID: 960238592}
   m_Father: {fileID: 923254740}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -250}
-  m_SizeDelta: {x: 720, y: 450}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -15}
+  m_SizeDelta: {x: 0, y: 400}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2098554075
 MonoBehaviour:
   m_ObjectHideFlags: 0
