@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -21,6 +20,7 @@ public class MusicPlayer : MonoBehaviour
     public AudioClip[] songs;
     private void Start()
     {
+        Application.runInBackground = true;
         StartCoroutine(PlayMusic());
     }
 
@@ -30,7 +30,9 @@ public class MusicPlayer : MonoBehaviour
         {
             audioSource.clip = songs[UnityEngine.Random.Range(0, songs.Length)];
             audioSource.Play();
-            yield return new WaitWhile(() => audioSource.isPlaying);
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(audioSource.clip.length);
         }
+        // ReSharper disable once IteratorNeverReturns
     }
 }
