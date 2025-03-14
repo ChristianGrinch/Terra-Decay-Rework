@@ -11,7 +11,7 @@ public class SettingsUI : MonoBehaviour
     public GameObject audioPanel;
     public GameObject videoPanel;
 
-    public GameObject currentPanel = null;
+    public GameObject currentPanel;
     private void Start()
     {
         goBackBtn.onClick.AddListener(() => UIManager.Instance.GoBack());
