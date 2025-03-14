@@ -30,10 +30,13 @@ public class UIManager : MonoBehaviour
     public List<Interface> interfaces;
     public List<GameObject> menuGameObjects;
     public Canvas parentCanvas;
+    [Header("Other")] 
+    public GameObject rightSettingsPanel;
     
     private void Start()
     { 
         InitializeMenuGameObjects();
+        CloseAllMenuGameObjects();
         OpenMenu(Menu.Start);
     }
 
@@ -103,18 +106,10 @@ public class UIManager : MonoBehaviour
         //OpenMenu(navigationHistory[^1].menu);
     }
 
-    public void CloseAllMenus()
+    private void CloseAllMenuGameObjects()
     {
-        for (int i = 1; i < navigationHistory.Count - 1; i++)
-        {
-            string menuName = navigationHistory[i].gameObject.name.Split(" ")[0];
-            
-            if (Enum.TryParse(menuName, out Menu parsedMenu))
-            {
-                CloseMenu(parsedMenu);
-            }
-            
-        }
+        for(int i = 0; i < rightSettingsPanel.transform.childCount; i++) rightSettingsPanel.transform.GetChild(i).gameObject.SetActive(false);
+        for (int i = 1; i < parentCanvas.transform.childCount; i++) parentCanvas.transform.GetChild(i).gameObject.SetActive(false);
     }
     public void ToggleMenuStatus(Menu menuToToggle)
     {
