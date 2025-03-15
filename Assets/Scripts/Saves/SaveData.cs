@@ -20,7 +20,7 @@ public class SaveData
     }
     public static SaveData AssignSettingsData()
     {
-        return new SaveData()
+        return new SaveData
         {
             masterVolume = (int)SettingsUI.Instance.musicVolumeSlider.value,
             musicVolume = (int)SettingsUI.Instance.musicVolumeSlider.value,
@@ -29,7 +29,7 @@ public class SaveData
 
     public static SaveData CreateDefaultData()
     {
-        return new SaveData()
+        return new SaveData
         {
 
         };
@@ -37,7 +37,7 @@ public class SaveData
 
     public static SaveData CreateDefaultSettingsData()
     {
-        return new SaveData()
+        return new SaveData
         {
             masterVolume = 100,
             musicVolume = 100,
