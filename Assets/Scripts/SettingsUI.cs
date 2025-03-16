@@ -31,6 +31,9 @@ public class SettingsUI : MonoBehaviour
     public TMP_Text  musicVolumeText;
     [Header("Other")]
     public GameObject currentPanel;
+
+    public int masterVolume;
+    public int musicVolume;
     private void Start()
     {
         goBackBtn.onClick.AddListener(() => UIManager.Instance.GoBack());
@@ -54,6 +57,7 @@ public class SettingsUI : MonoBehaviour
 
     private void ChangeMasterVolume(float value)
     {
+        masterVolume = (int)value;
         // MusicPlayer.Instance.audioSource.volume = value/100f;
         ChangeMusicVolume(musicVolumeSlider.value);
         masterVolumeText.text = value + "%";
@@ -61,8 +65,8 @@ public class SettingsUI : MonoBehaviour
 
     private void ChangeMusicVolume(float value)
     {
-        int musicVolume = (int)value;
-        int masterVolume = (int)masterVolumeSlider.value;
+        musicVolume = (int)value;
+        masterVolume = (int)masterVolumeSlider.value;
         MusicPlayer.Instance.audioSource.volume = (musicVolume / 100f)*(masterVolume / 100f);
         musicVolumeText.text = musicVolume + "%";
     }

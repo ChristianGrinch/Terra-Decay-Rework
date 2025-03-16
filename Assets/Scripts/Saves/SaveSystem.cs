@@ -11,8 +11,8 @@ public static class SaveSystem
 {
 	public static void SaveGame(string saveName)
 	{
-		SaveData saveData = SaveData.AssignData();
-		byte[] bytes = MessagePackSerializer.Serialize(saveData);
+		GameSaveData gameSaveData = GameSaveData.FetchSaveData();
+		byte[] bytes = MessagePackSerializer.Serialize(gameSaveData);
         string path = Path.Combine(Application.persistentDataPath, saveName + ".svf");
 
 
@@ -21,14 +21,14 @@ public static class SaveSystem
 	}
     public static void CreateSave(string saveName)
     {
-        SaveData saveData = SaveData.CreateDefaultData();
-        byte[] bytes = MessagePackSerializer.Serialize(saveData);
+        GameSaveData gameSaveData = GameSaveData.CreateDefaultData();
+        byte[] bytes = MessagePackSerializer.Serialize(gameSaveData);
         string path = Path.Combine(Application.persistentDataPath, saveName + ".svf");
 
         File.WriteAllBytes(path, bytes);
         Debug.Log("Created new save file with length: " + bytes.Length + " bytes.");
     }
-	public static SaveData LoadGame(string saveName)
+	public static GameSaveData LoadGame(string saveName)
 	{
         string path = Path.Combine(Application.persistentDataPath, saveName + ".svf");
 
@@ -37,7 +37,7 @@ public static class SaveSystem
 		{
 			
 			byte[] readBytes = File.ReadAllBytes(path);
-			SaveData data = MessagePackSerializer.Deserialize<SaveData>(readBytes);
+			GameSaveData data = MessagePackSerializer.Deserialize<GameSaveData>(readBytes);
 
 			Debug.Log("Loaded file with length: " + readBytes.Length + " bytes.");
 			return data;
@@ -144,13 +144,8 @@ public static class SaveSystem
 			{
 				return defaultSaveName;
 			}
-			else
-			{
-				Debug.LogWarning("No default save assigned!");
-				return null;
-			}
-            //Debug.Log("Loaded Default save file");
-            
+			Debug.LogWarning("No default save assigned!");
+			return null;
         }
 
         Debug.LogWarning("No default save assigned!");
@@ -160,33 +155,34 @@ public static class SaveSystem
 	{
 		string path = Path.Combine(Application.persistentDataPath, "Settings" + ".ssvf"); // Settings SaVeFile
 
-		byte[] bytes = MessagePackSerializer.Serialize(SaveData.AssignSettingsData());
+		byte[] bytes = MessagePackSerializer.Serialize(SettingsData.FetchSettingsData());
 
 		File.WriteAllBytes(path, bytes);
 		Debug.Log("Saved .ssvf");
 	}
-	public static SaveData LoadSettings()
+	public static SettingsData LoadSettings()
 	{
 		string path = Path.Combine(Application.persistentDataPath, "Settings" + ".ssvf");
 
 		if (File.Exists(path))
 		{
 			byte[] readBytes = File.ReadAllBytes(path);
-			SaveData data = MessagePackSerializer.Deserialize<SaveData>(readBytes);
+			SettingsData data = MessagePackSerializer.Deserialize<SettingsData>(readBytes);
 			Debug.Log("Loaded .ssvf");
 			return data;
 		}
-
-		Debug.LogWarning("No .ssvf file detected!");
-		return null;
+		
+		Debug.LogWarning("No .ssvf file detected! Creating  a new one.");
+		return CreateSettingsSave();
 	}
-	public static void CreateSaveSettings()
+	public static SettingsData CreateSettingsSave()
 	{
 		string path = Path.Combine(Application.persistentDataPath, "Settings" + ".ssvf"); // Settings SaVeFile
 
-		byte[] bytes = MessagePackSerializer.Serialize(SaveData.CreateDefaultSettingsData());
+		byte[] bytes = MessagePackSerializer.Serialize(SettingsData.CreateDefaultSettingsData());
 
 		File.WriteAllBytes(path, bytes);
 		Debug.Log("Created .ssvf");
+		return MessagePackSerializer.Deserialize<SettingsData>(bytes);
 	}
 }
