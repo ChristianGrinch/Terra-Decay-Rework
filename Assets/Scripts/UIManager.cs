@@ -90,10 +90,6 @@ public class UIManager : MonoBehaviour
 
                 break;
             }
-            else
-            {
-                Debug.Log("");
-            }
         }
         return returnMenu;
     }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using MessagePack;
 
+[MessagePackObject]
 public class SettingsData
 {
     // Settings Data (Keys 0-100)

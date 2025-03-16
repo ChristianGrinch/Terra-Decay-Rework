@@ -1,6 +1,7 @@
 using UnityEngine;
 using MessagePack;
 
+[MessagePackObject]
 public class GameSaveData
 {
     // Player Data (Keys 0-49)
