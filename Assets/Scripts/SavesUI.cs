@@ -4,6 +4,18 @@ using UnityEngine.UI;
 
 public class SavesUI : MonoBehaviour
 {
+    public static SavesUI Instance {get; private set;}
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     [Header("Buttons")] 
     public Button goBackBtn;
     public Button step1PanelBtn;
@@ -16,6 +28,11 @@ public class SavesUI : MonoBehaviour
     public GameObject rightPanel;
     public GameObject step1Panel;
     public GameObject step2Panel;
+    [Header("Save Prefab stuff")]
+    public GameObject savePrefab;
+    public GameObject instantiatedSavePrefab;
+    public TMP_Text saveText;
+    public GameObject contentPanel;
     [Header("Other")]
     public TMP_Dropdown difficultyDropdown;
     public TMP_Text  difficultyText;

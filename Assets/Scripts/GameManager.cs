@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -29,6 +30,8 @@ public class GameManager : MonoBehaviour
     public void CreateSave(string selectedSaveName)
     {
         activeSaveName = selectedSaveName;
+        SavesUI.Instance.instantiatedSavePrefab = Instantiate(SavesUI.Instance.savePrefab, SavesUI.Instance.contentPanel.transform);
+        SavesUI.Instance.saveText = SavesUI.Instance.instantiatedSavePrefab.GetComponentInChildren<TMP_Text>();
         SaveSystem.CreateSave(selectedSaveName);
     }
     public void SaveGame()

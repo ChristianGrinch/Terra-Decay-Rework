@@ -40,9 +40,8 @@ public class SettingsUI : MonoBehaviour
     public int musicVolume;
     public SettingsData settingsData;
     private SettingsData editedSettings;
-    [Header("Save Prefab stuff")]
-    public GameObject savePrefab;
-    public TMP_Text saveText;
+    
+    
     private void Start()
     {
         goBackBtn.onClick.AddListener(GoBack);
