@@ -59,7 +59,7 @@ public class SettingsUI : MonoBehaviour
 
     private void OpenSaveCheck()
     {
-        throw new System.NotImplementedException();
+        PopupManager.Instance.OpenPopup(Popup.QuitWithoutSaving);
     }
     private void OpenPanel(GameObject panel)
     {

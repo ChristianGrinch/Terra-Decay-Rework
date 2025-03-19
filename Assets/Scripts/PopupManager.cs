@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum Popup
 {
@@ -21,30 +23,38 @@ public class PopupManager : MonoBehaviour
         }
     }
 
-    public List<GameObject> popups;
-    private void Start()
-    {
-        InitalizePopupGameObjects();
-    }
-
-    private void InitalizePopupGameObjects()
-    {
-        popups = Resources.LoadAll<GameObject>("Popups").ToList();
-    }
-
+    [Header("Popup Objects")] 
+    public GameObject popupPrefab;
+    public GameObject instantiatedPopup;
+    public TMP_Text titleText;
+    public Button action1Btn;
+    public Button action2Btn;
+    public Button cancelBtn;
     public void OpenPopup(Popup popup)
     {
-        GameObject instantiatedPopup;
         switch (popup)
         {
             case Popup.QuitWithoutSaving:
-                foreach (GameObject item in popups)
+                instantiatedPopup = Instantiate(popupPrefab, UIManager.Instance.parentCanvas.transform).transform.Find("Panel").gameObject;
+                titleText = instantiatedPopup.GetComponentInChildren<TMP_Text>();
+                action1Btn = instantiatedPopup.transform.Find("Action Btn").GetComponent<Button>();
+                action2Btn = instantiatedPopup.transform.Find("Action 2 Btn").GetComponent<Button>();
+                cancelBtn = instantiatedPopup.transform.Find("Cancel Btn").GetComponent<Button>();
+
+                titleText.text = "Quit without saving?";
+                action1Btn.GetComponentInChildren<TMP_Text>().text = "Save and exit";
+                action1Btn.onClick.AddListener(() =>
                 {
-                    if (item.name == popup.ToString())
-                    {
-                        instantiatedPopup = Instantiate(item, UIManager.Instance.parentCanvas.transform);
-                    }
-                }
+                    GameManager.Instance.SaveSettings();
+                    Destroy(instantiatedPopup);
+                });
+                action2Btn.GetComponentInChildren<TMP_Text>().text = "Exit without saving";
+                action2Btn.onClick.AddListener(() =>
+                {
+                    GameManager.Instance.LoadSettingsData();
+                    Destroy(instantiatedPopup);
+                });
+                cancelBtn.onClick.AddListener(() => Destroy(instantiatedPopup));
                 break;
             default:
                 Debug.LogError("Invalid popup type!");
