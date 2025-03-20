@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
@@ -22,20 +23,21 @@ public class SettingsUI : MonoBehaviour
     public Button goBackBtn;
     public Button audioBtn;
     public Button videoBtn;
+    public Button saveBtn;
     [Header("Panels")]
     public GameObject audioPanel;
     public GameObject videoPanel;
+    public GameObject currentPanel;
+    public GameObject savePanel;
     [Header("Audio")]
     public Slider masterVolumeSlider;
     public TMP_Text  masterVolumeText;
     public Slider musicVolumeSlider;
     public TMP_Text  musicVolumeText;
+    [Header("Video")]
+    public TMP_Dropdown overallQualityDropdown;
     [Header("Other")]
-    public GameObject currentPanel;
-    public TMP_Text changedSettingsText;
-
     public bool didChangeSetting;
-    public bool didSaveChanges;
     
     private void Start()
     {
@@ -44,14 +46,31 @@ public class SettingsUI : MonoBehaviour
         videoBtn.onClick.AddListener(() =>  OpenPanel(videoPanel));
         masterVolumeSlider.onValueChanged.AddListener(ChangeMasterVolume);
         musicVolumeSlider.onValueChanged.AddListener(ChangeMusicVolume);
+        saveBtn.onClick.AddListener(() =>
+        {
+            GameManager.Instance.SaveSettings();
+            didChangeSetting = false;
+        });
+        overallQualityDropdown.onValueChanged.AddListener(ChangeOverallQuality);
+    }
+
+    private void Update()
+    {
+        savePanel.SetActive(didChangeSetting);
     }
 
     private void GoBack()
     {
-        if(!didChangeSetting) UIManager.Instance.GoBack();
-        if (didChangeSetting && !didSaveChanges) OpenSaveCheck();
+        if (!didChangeSetting)
+        {
+            UIManager.Instance.GoBack();
+        }
+        else
+        {
+            OpenSaveCheck();
+        }
     }
-
+    
     private void OpenSaveCheck()
     {
         PopupManager.Instance.OpenPopup(Popup.QuitWithoutSaving);
@@ -84,5 +103,12 @@ public class SettingsUI : MonoBehaviour
         musicVolumeText.text = value + "%";
         musicVolumeSlider.value = value;
         AudioManager.Instance.UpdateMusicVolume((int)value);
+    }
+
+    private void ChangeOverallQuality(int value)
+    {
+        if(Time.time > 1) didChangeSetting = true;
+
+        throw new NotImplementedException();
     }
 }

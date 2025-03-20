@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
         
         SettingsUI.Instance.ChangeMasterVolume(settingsData.masterVolume);
         SettingsUI.Instance.ChangeMusicVolume(settingsData.musicVolume);
+        SettingsUI.Instance.overallQualityDropdown.value = settingsData.overallQuality;
     }
     
     
