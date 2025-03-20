@@ -46,13 +46,17 @@ public class PopupManager : MonoBehaviour
                 action1Btn.onClick.AddListener(() =>
                 {
                     GameManager.Instance.SaveSettings();
-                    Destroy(instantiatedPopup);
+                    SettingsUI.Instance.didChangeSetting = false;
+                    UIManager.Instance.GoBack();
+                    Destroy(instantiatedPopup.transform.parent.gameObject);
                 });
                 action2Btn.GetComponentInChildren<TMP_Text>().text = "Exit without saving";
                 action2Btn.onClick.AddListener(() =>
                 {
                     GameManager.Instance.LoadSettingsData();
-                    Destroy(instantiatedPopup);
+                    SettingsUI.Instance.didChangeSetting = false;
+                    UIManager.Instance.GoBack();
+                    Destroy(instantiatedPopup.transform.parent.gameObject);
                 });
                 cancelBtn.onClick.AddListener(() => Destroy(instantiatedPopup));
                 break;

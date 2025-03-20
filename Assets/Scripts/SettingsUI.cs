@@ -73,18 +73,18 @@ public class SettingsUI : MonoBehaviour
         currentPanel = null;
     }
 
-    private void ChangeMasterVolume(float value)
+    public void ChangeMasterVolume(float value)
     {
-        didChangeSetting = true;
+        if(Time.time > 1) didChangeSetting = true;
         masterVolume = (int)value;
         // MusicPlayer.Instance.audioSource.volume = value/100f;
         ChangeMusicVolume(musicVolumeSlider.value);
         masterVolumeText.text = value + "%";
     }
 
-    private void ChangeMusicVolume(float value)
+    public void ChangeMusicVolume(float value)
     {
-        didChangeSetting = true;
+        if(Time.time > 1) didChangeSetting = true;
         musicVolume = (int)value;
         masterVolume = (int)masterVolumeSlider.value;
         MusicPlayer.Instance.audioSource.volume = (musicVolume / 100f)*(masterVolume / 100f);

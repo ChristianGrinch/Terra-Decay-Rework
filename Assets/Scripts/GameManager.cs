@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
     {
         SettingsData settingsData = SaveSystem.LoadSettings();
         
-        SettingsUI.Instance.masterVolume = settingsData.masterVolume;
+        SettingsUI.Instance.ChangeMasterVolume(settingsData.masterVolume);
         SettingsUI.Instance.musicVolume = settingsData.musicVolume;
     }
     
