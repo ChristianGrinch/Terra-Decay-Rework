@@ -36,11 +36,6 @@ public class SettingsUI : MonoBehaviour
 
     public bool didChangeSetting;
     public bool didSaveChanges;
-    public int masterVolume;
-    public int musicVolume;
-    public SettingsData settingsData;
-    private SettingsData editedSettings;
-    
     
     private void Start()
     {
@@ -75,19 +70,19 @@ public class SettingsUI : MonoBehaviour
 
     public void ChangeMasterVolume(float value)
     {
-        if(Time.time > 1) didChangeSetting = true;
-        masterVolume = (int)value;
-        // MusicPlayer.Instance.audioSource.volume = value/100f;
-        ChangeMusicVolume(musicVolumeSlider.value);
+        if(Time.time > 1) didChangeSetting = true; // Makes sure not to enable didChangeSetting when loading volume settings at game start.
+        
         masterVolumeText.text = value + "%";
+        masterVolumeSlider.value = value;
+        AudioManager.Instance.UpdateMasterVolume((int)value);
     }
 
     public void ChangeMusicVolume(float value)
     {
         if(Time.time > 1) didChangeSetting = true;
-        musicVolume = (int)value;
-        masterVolume = (int)masterVolumeSlider.value;
-        MusicPlayer.Instance.audioSource.volume = (musicVolume / 100f)*(masterVolume / 100f);
-        musicVolumeText.text = musicVolume + "%";
+        
+        musicVolumeText.text = value + "%";
+        musicVolumeSlider.value = value;
+        AudioManager.Instance.UpdateMusicVolume((int)value);
     }
 }

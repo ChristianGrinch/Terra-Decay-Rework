@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
         activeSaveName = selectedSaveName;
         GameSaveData gameSaveData = SaveSystem.LoadGame(selectedSaveName);
         
-        
+        throw new NotImplementedException();
     }
 
     public void SaveSettings()
@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
         SettingsData settingsData = SaveSystem.LoadSettings();
         
         SettingsUI.Instance.ChangeMasterVolume(settingsData.masterVolume);
-        SettingsUI.Instance.musicVolume = settingsData.musicVolume;
+        SettingsUI.Instance.ChangeMusicVolume(settingsData.musicVolume);
     }
     
     

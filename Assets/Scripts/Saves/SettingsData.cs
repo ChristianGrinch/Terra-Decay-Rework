@@ -12,7 +12,7 @@ public class SettingsData
     {
         return new SettingsData
         {
-            masterVolume = (int)SettingsUI.Instance.musicVolumeSlider.value,
+            masterVolume = (int)SettingsUI.Instance.masterVolumeSlider.value,
             musicVolume = (int)SettingsUI.Instance.musicVolumeSlider.value,
         };
     }

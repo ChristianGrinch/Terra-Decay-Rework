@@ -35,4 +35,11 @@ public class MusicPlayer : MonoBehaviour
         }
         // ReSharper disable once IteratorNeverReturns
     }
+
+    public void ChangeVolume()
+    {
+        int masterVolume = AudioManager.Instance.masterVolume;
+        int musicVolume = AudioManager.Instance.musicVolume;
+        audioSource.volume = (musicVolume / 100f)*(masterVolume / 100f);
+    }
 }

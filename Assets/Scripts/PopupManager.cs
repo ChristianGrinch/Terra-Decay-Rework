@@ -58,7 +58,7 @@ public class PopupManager : MonoBehaviour
                     UIManager.Instance.GoBack();
                     Destroy(instantiatedPopup.transform.parent.gameObject);
                 });
-                cancelBtn.onClick.AddListener(() => Destroy(instantiatedPopup));
+                cancelBtn.onClick.AddListener(() => Destroy(instantiatedPopup.transform.parent.gameObject));
                 break;
             default:
                 Debug.LogError("Invalid popup type!");
