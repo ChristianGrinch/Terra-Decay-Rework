@@ -40,6 +40,11 @@ public class UIManager : MonoBehaviour
         OpenMenu(Menu.Start);
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape)) GoBack();
+    }
+
     private void InitializeMenuGameObjects()
     {
         while (menuGameObjects.Count < parentCanvas.transform.childCount - 1)// "i - 1" to offset for the "Other" GameObject in the root Canvas
@@ -71,10 +76,9 @@ public class UIManager : MonoBehaviour
         
         for (int i = 1; i < parentCanvas.transform.childCount; i++)
         {
-            Debug.Log($"{parentCanvas.transform.GetChild(i).gameObject.name.Split(" ")[0]} + {menu.ToString()}");
+            //Debug.Log($"{parentCanvas.transform.GetChild(i).gameObject.name.Split(" ")[0]} + {menu.ToString()}");
             if (parentCanvas.transform.GetChild(i).gameObject.name.Split(" ")[0] == menu.ToString())
             {
-                Debug.Log("Ran inside if.");
                 returnMenu.gameObject = parentCanvas.transform.GetChild(i).gameObject;
                 
                 string menuName = returnMenu.gameObject.name.Split(" ")[0];
@@ -124,7 +128,7 @@ public class UIManager : MonoBehaviour
     public void OpenMenu(Menu menu)
     {
         Interface @interface = ReturnMenu(menu);
-        Debug.Log($"{@interface.menu} + {@interface.gameObject.name}");
+        //Debug.Log($"{@interface.menu} + {@interface.gameObject.name}");
         @interface.gameObject.SetActive(true); // Above the return so that GoBack() can call this method and open the last menu correctly
         if (navigationHistory.Contains(@interface)) return;
         

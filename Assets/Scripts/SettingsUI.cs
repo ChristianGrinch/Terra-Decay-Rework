@@ -1,9 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[Serializable]
+public enum Keys
+{
+    GoBack,
+}
 public class SettingsUI : MonoBehaviour
 {
     public static SettingsUI Instance {get; private set;}
@@ -36,11 +42,16 @@ public class SettingsUI : MonoBehaviour
     public TMP_Text  musicVolumeText;
     [Header("Video")]
     public TMP_Dropdown overallQualityDropdown;
+
+    [Header("Controls")]
+    public Dictionary<Keys, KeyCode> controlKeys;
+    
     [Header("Other")]
     public bool didChangeSetting;
     
     private void Start()
     {
+        InitializeControls();
         goBackBtn.onClick.AddListener(GoBack);
         audioBtn.onClick.AddListener(() => OpenPanel(audioPanel));
         videoBtn.onClick.AddListener(() =>  OpenPanel(videoPanel));
@@ -59,6 +70,12 @@ public class SettingsUI : MonoBehaviour
         savePanel.SetActive(didChangeSetting);
     }
 
+    private void InitializeControls()
+    {
+        controlKeys = new Dictionary<Keys, KeyCode> {
+            {Keys.GoBack, KeyCode.Escape},
+        };
+    }
     private void GoBack()
     {
         if (!didChangeSetting)
