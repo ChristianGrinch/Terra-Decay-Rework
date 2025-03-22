@@ -42,7 +42,14 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape)) GoBack();
+        try
+        {
+            if (Input.GetKeyDown(SettingsUI.Instance.controlKeys[Keys.GoBack])) GoBack();
+        }
+        catch
+        {
+            // ignored
+        }
     }
 
     private void InitializeMenuGameObjects()

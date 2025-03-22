@@ -1724,81 +1724,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 302641935}
   m_CullTransparentMesh: 1
---- !u!1 &304594764
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 304594765}
-  - component: {fileID: 304594767}
-  - component: {fileID: 304594766}
-  m_Layer: 5
-  m_Name: Panel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &304594765
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 304594764}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 458229788}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 500, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &304594766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 304594764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.754717, g: 0.754717, b: 0.754717, a: 0.392}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &304594767
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 304594764}
-  m_CullTransparentMesh: 1
 --- !u!1 &305131822
 GameObject:
   m_ObjectHideFlags: 0
@@ -3402,13 +3327,12 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 304594765}
+  m_Children: []
   m_Father: {fileID: 493904202}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.00004658923}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &458229789
@@ -6476,15 +6400,21 @@ MonoBehaviour:
   audioBtn: {fileID: 936816779}
   videoBtn: {fileID: 830712915}
   saveBtn: {fileID: 687945825}
+  controlsBtn: {fileID: 968345616}
   audioPanel: {fileID: 1577414427}
   videoPanel: {fileID: 2026733716}
-  currentPanel: {fileID: 0}
+  controlsPanel: {fileID: 1638935351}
   savePanel: {fileID: 164279535}
+  currentPanel: {fileID: 0}
   masterVolumeSlider: {fileID: 1133768807}
   masterVolumeText: {fileID: 228851900}
   musicVolumeSlider: {fileID: 1886455928}
   musicVolumeText: {fileID: 1314152854}
   overallQualityDropdown: {fileID: 81389890}
+  controlPanelContent: {fileID: 458229787}
+  controlObjectPrefab: {fileID: 4408216669220116775, guid: 3048e9f974720b146b0cdceb217f4e51, type: 3}
+  keysFunctionText: {fileID: 0}
+  keyUsedText: {fileID: 0}
   didChangeSetting: 0
 --- !u!4 &786640677
 Transform:
@@ -10936,7 +10866,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1857903372}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.928194
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
