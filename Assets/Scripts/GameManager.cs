@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -57,7 +58,7 @@ public class GameManager : MonoBehaviour
         AudioSettings.Instance.ChangeMasterVolume(settingsData.masterVolume);
         AudioSettings.Instance.ChangeMusicVolume(settingsData.musicVolume);
         VideoSettings.Instance.overallQualityDropdown.value = settingsData.overallQuality;
+        ControlsSettings.Instance.controlKeys = settingsData.controlKeys;
     }
-    
     
 }

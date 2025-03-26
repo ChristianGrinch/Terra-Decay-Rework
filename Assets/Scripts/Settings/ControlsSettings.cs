@@ -11,6 +11,7 @@ public class ControlsSettings : MonoBehaviour
     public static ControlsSettings Instance {get; private set;}
     private void Awake()
     {
+        controlKeys = ReturnDefaultControlKeys();
         if (Instance == null)
         {
             Instance = this;
@@ -29,7 +30,8 @@ public class ControlsSettings : MonoBehaviour
 
     private void Start()
     {
-        InitializeControls();
+        
+        StartCoroutine(InitializeControls());
     }
     public Dictionary<Keys, KeyCode> ReturnDefaultControlKeys()
     {
@@ -51,9 +53,9 @@ public class ControlsSettings : MonoBehaviour
             "$1 $2" 
         );
     }
-    private void InitializeControls()
+    private IEnumerator InitializeControls()
     {
-        controlKeys = ReturnDefaultControlKeys();
+        yield return new WaitForEndOfFrame(); // Waits for controls to be loaded then displays controls
         foreach (var control in controlKeys)
         {
             string key = SplitCamelCase(control.Key.ToString());

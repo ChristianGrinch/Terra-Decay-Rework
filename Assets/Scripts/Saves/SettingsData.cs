@@ -12,6 +12,7 @@ public class SettingsData
     // Video (Keys 20-39)
     [Key(20)] public int overallQuality;
     // Controls (Keys 40-69)
+    [Key(40)] public Dictionary<Keys, KeyCode> controlKeys;
     
     public static SettingsData FetchSettingsData()
     {
@@ -20,6 +21,7 @@ public class SettingsData
             masterVolume = (int)AudioSettings.Instance.masterVolumeSlider.value,
             musicVolume = (int)AudioSettings.Instance.musicVolumeSlider.value,
             overallQuality = VideoSettings.Instance.overallQualityDropdown.value,
+            controlKeys = ControlsSettings.Instance.controlKeys,
         };
     }
     public static SettingsData CreateDefaultSettingsData()
@@ -29,6 +31,7 @@ public class SettingsData
             masterVolume = 100,
             musicVolume = 100,
             overallQuality = 3,
+            controlKeys = ControlsSettings.Instance.ReturnDefaultControlKeys(),
         };
     }
 }
