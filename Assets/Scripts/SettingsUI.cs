@@ -59,10 +59,7 @@ public class SettingsUI : MonoBehaviour
     {
         savePanel.SetActive(didChangeSetting);
     }
-    
-   
-
-    private void GoBack()
+    public void GoBack()
     {
         if (!didChangeSetting)
         {

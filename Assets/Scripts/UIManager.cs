@@ -42,9 +42,17 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        try
+        try // I don't remember why this is a thing, but it's needed for something 💖
         {
-            if (Input.GetKeyDown(ControlsSettings.Instance.controlKeys[Keys.GoBack])) GoBack();
+            if (Input.GetKeyDown(ControlsSettings.Instance.controlKeys[Keys.GoBack]))
+            {
+                if (ReturnCurrentMenu() == Menu.Settings)
+                {
+                    SettingsUI.Instance.GoBack();
+                    return;
+                }
+                GoBack();
+            }
         }
         catch
         {
@@ -77,6 +85,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     private Interface ReturnMenu(Menu menu)
     {
         Interface returnMenu = new();
@@ -113,25 +122,15 @@ public class UIManager : MonoBehaviour
         //OpenMenu(navigationHistory[^1].menu);
     }
 
+    public Menu ReturnCurrentMenu()
+    {
+        return navigationHistory[^1].menu;
+    }
     private void CloseAllMenuGameObjects()
     {
         for(int i = 0; i < rightSettingsPanel.transform.childCount; i++) rightSettingsPanel.transform.GetChild(i).gameObject.SetActive(false);
         for (int i = 1; i < parentCanvas.transform.childCount; i++) parentCanvas.transform.GetChild(i).gameObject.SetActive(false);
     }
-    public void ToggleMenuStatus(Menu menuToToggle)
-    {
-        
-    }
-    public bool GetMenuStatus(Menu menu)
-    {
-        return navigationHistory.Contains(new Interface { menu = menu } );
-    }
-
-    public void SetMenuStatus(Menu menu, bool status)
-    {
-        
-    }
-
     public void OpenMenu(Menu menu)
     {
         Interface @interface = ReturnMenu(menu);

@@ -30,6 +30,7 @@ public class PopupManager : MonoBehaviour
     public Button action1Btn;
     public Button action2Btn;
     public Button cancelBtn;
+    // ReSharper disable Unity.PerformanceAnalysis
     public void OpenPopup(Popup popup)
     {
         switch (popup)
