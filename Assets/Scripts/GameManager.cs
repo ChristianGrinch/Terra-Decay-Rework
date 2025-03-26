@@ -53,11 +53,10 @@ public class GameManager : MonoBehaviour
     public void LoadSettingsData()
     {
         SettingsData settingsData = SaveSystem.LoadSettings();
-        SettingsUI settingsUi = SettingsUI.Instance;
         
-        settingsUi.ChangeMasterVolume(settingsData.masterVolume);
-        settingsUi.ChangeMusicVolume(settingsData.musicVolume);
-        settingsUi.overallQualityDropdown.value = settingsData.overallQuality;
+        AudioSettings.Instance.ChangeMasterVolume(settingsData.masterVolume);
+        AudioSettings.Instance.ChangeMusicVolume(settingsData.musicVolume);
+        VideoSettings.Instance.overallQualityDropdown.value = settingsData.overallQuality;
     }
     
     

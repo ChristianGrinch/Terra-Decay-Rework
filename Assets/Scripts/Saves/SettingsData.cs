@@ -5,7 +5,6 @@ using MessagePack;
 [MessagePackObject]
 public class SettingsData
 {
-    private static SettingsUI settingsUI =  SettingsUI.Instance;
     // Settings Data (Keys 0-100)
     // Audio (Keys 0-19)
     [Key(0)] public int masterVolume;
@@ -18,9 +17,9 @@ public class SettingsData
     {
         return new SettingsData
         {
-            masterVolume = (int)settingsUI.masterVolumeSlider.value,
-            musicVolume = (int)settingsUI.musicVolumeSlider.value,
-            overallQuality = settingsUI.overallQualityDropdown.value,
+            masterVolume = (int)AudioSettings.Instance.masterVolumeSlider.value,
+            musicVolume = (int)AudioSettings.Instance.musicVolumeSlider.value,
+            overallQuality = VideoSettings.Instance.overallQualityDropdown.value,
         };
     }
     public static SettingsData CreateDefaultSettingsData()

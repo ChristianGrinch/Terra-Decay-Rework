@@ -44,7 +44,7 @@ public class UIManager : MonoBehaviour
     {
         try
         {
-            if (Input.GetKeyDown(SettingsUI.Instance.controlKeys[Keys.GoBack])) GoBack();
+            if (Input.GetKeyDown(ControlsSettings.Instance.controlKeys[Keys.GoBack])) GoBack();
         }
         catch
         {
