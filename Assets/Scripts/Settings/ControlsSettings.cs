@@ -28,6 +28,8 @@ public class ControlsSettings : MonoBehaviour
     public TMP_Text keysFunctionText;
     public TMP_Text keyUsedText;
 
+    public bool waitingForKey = false;
+
     private void Start()
     {
         
@@ -53,7 +55,7 @@ public class ControlsSettings : MonoBehaviour
             "$1 $2" 
         );
     }
-    private IEnumerator InitializeControls()
+    public IEnumerator InitializeControls()
     {
         yield return new WaitForEndOfFrame(); // Waits for controls to be loaded then displays controls
         foreach (var control in controlKeys)
@@ -75,9 +77,10 @@ public class ControlsSettings : MonoBehaviour
             keyUsedText.text = keyCode;
         }
     }
-    // Completely made with ChatGPT. Thanks!
+    // Almost completely made with ChatGPT. Thanks!
     private IEnumerator WaitForKey(Keys controlKey)
     {
+        waitingForKey = true;
         bool keyDetected = false;
         while (!keyDetected)
         {
@@ -86,6 +89,13 @@ public class ControlsSettings : MonoBehaviour
             {
                 if (Input.GetKeyDown(keyDown))
                 {
+                    if (keyDown == KeyCode.Mouse0) break;
+                    waitingForKey = false; // Needs to be below mouse0 break, but still above the same key check
+                    if (keyDown == controlKeys[controlKey])
+                    {
+                        keyUsedText.text = keyDown.ToString();
+                        yield break;
+                    }
                     controlKeys[controlKey] = keyDown;
                     keyUsedText.text = keyDown.ToString(); // Update UI
                     keyDetected = true;

@@ -172,7 +172,7 @@ public static class SaveSystem
 			return data;
 		}
 		
-		Debug.LogWarning("No .ssvf file detected! Creating  a new one.");
+		Debug.LogWarning("No .ssvf file detected! Creating a new one.");
 		return CreateSettingsSave();
 	}
 	public static SettingsData CreateSettingsSave()

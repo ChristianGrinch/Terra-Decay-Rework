@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     [Header("Important stuff")] 
     public int difficulty;
     public string activeSaveName = "";
+    public bool completedFirstSSVFLoad = false;
 
     private void Start()
     {
@@ -59,6 +60,21 @@ public class GameManager : MonoBehaviour
         AudioSettings.Instance.ChangeMusicVolume(settingsData.musicVolume);
         VideoSettings.Instance.overallQualityDropdown.value = settingsData.overallQuality;
         ControlsSettings.Instance.controlKeys = settingsData.controlKeys;
+        switch (completedFirstSSVFLoad)
+        {
+            case true:
+            {
+                foreach(Transform child in ControlsSettings.Instance.controlPanelContent.transform)
+                {
+                    Destroy(child.gameObject);
+                }
+                StartCoroutine(ControlsSettings.Instance.InitializeControls());
+                break;
+            }
+            case false:
+                completedFirstSSVFLoad = true;
+                break;
+        }
     }
     
 }

@@ -57,6 +57,8 @@ public class SettingsUI : MonoBehaviour
     }
     public void GoBack()
     {
+        if (ControlsSettings.Instance.waitingForKey) return;
+        
         if (!didChangeSetting)
         {
             UIManager.Instance.GoBack();
