@@ -28,11 +28,18 @@ public class SavesUI : MonoBehaviour
     public GameObject rightPanel;
     public GameObject step1Panel;
     public GameObject step2Panel;
+    public GameObject difficultyPanel;
     [Header("Save Prefab stuff")]
     public GameObject savePrefab;
     public GameObject instantiatedSavePrefab;
     public TMP_Text saveText;
     public GameObject contentPanel;
+    [Header("Difficulty Information Prefabs")]
+    public GameObject easyDifficultyPrefab;
+    public GameObject mediumDifficultyPrefab;
+    public GameObject hardDifficultyPrefab;
+    public GameObject expertDifficultyPrefab;
+    public GameObject instantiatedDifficultyPrefab;
     [Header("Other")]
     public TMP_Dropdown difficultyDropdown;
     public TMP_Text  difficultyText;
@@ -64,19 +71,28 @@ public class SavesUI : MonoBehaviour
         {
             case 1:
                 difficulty = "Easy";
+                Destroy(instantiatedDifficultyPrefab);
+                instantiatedDifficultyPrefab = Instantiate(easyDifficultyPrefab, difficultyPanel.transform);
                 break;
             case 2:
                 difficulty = "Medium";
+                Destroy(instantiatedDifficultyPrefab);
+                instantiatedDifficultyPrefab = Instantiate(mediumDifficultyPrefab, difficultyPanel.transform);
                 break;
             case 3:
                 difficulty = "Hard";
+                Destroy(instantiatedDifficultyPrefab);
+                instantiatedDifficultyPrefab = Instantiate(hardDifficultyPrefab, difficultyPanel.transform);
                 break;
             case 4:
                 difficulty = "Expert";
+                Destroy(instantiatedDifficultyPrefab);
+                instantiatedDifficultyPrefab = Instantiate(expertDifficultyPrefab, difficultyPanel.transform);
                 break;
             default:
                 difficulty = "Unknown";
                 Debug.LogWarning("Unknown difficulty!");
+                Destroy(instantiatedDifficultyPrefab);
                 break;
         }
         difficultyText.text = $"Selected difficulty: {difficulty}";
