@@ -28,7 +28,7 @@ public class ControlsSettings : MonoBehaviour
     public TMP_Text keysFunctionText;
     public TMP_Text keyUsedText;
 
-    public bool waitingForKey = false;
+    public bool waitingForKey;
 
     private void Start()
     {

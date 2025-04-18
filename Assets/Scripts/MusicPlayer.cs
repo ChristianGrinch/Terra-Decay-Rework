@@ -26,9 +26,16 @@ public class MusicPlayer : MonoBehaviour
 
     private IEnumerator PlayMusic()
     {
+        int randomNumber = Random.Range(0, songs.Length);
         while (true)
         {
-            audioSource.clip = songs[UnityEngine.Random.Range(0, songs.Length)];
+            int newRandomNumber = Random.Range(0, songs.Length);
+            while (newRandomNumber == randomNumber)
+            {
+                newRandomNumber = Random.Range(0, songs.Length);
+            }
+            randomNumber = newRandomNumber;
+            audioSource.clip = songs[randomNumber];
             audioSource.Play();
             yield return new WaitForEndOfFrame();
             yield return new WaitForSeconds(audioSource.clip.length);

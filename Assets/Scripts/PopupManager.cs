@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -61,7 +59,6 @@ public class PopupManager : MonoBehaviour
                 cancelBtn.onClick.AddListener(() => Destroy(instantiatedPopup.transform.parent.gameObject));
                 break;
             case Popup.NoSavesRedirect:
-                Debug.Log("ran");
                 InitializeMenuGameObjects();
 
                 titleText.text = "No save detected! You must create a save before playing";

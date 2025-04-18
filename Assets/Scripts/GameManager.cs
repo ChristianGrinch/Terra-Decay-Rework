@@ -1,6 +1,4 @@
-using System;
-using System.Collections;
-using TMPro;
+using System;using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -22,7 +20,7 @@ public class GameManager : MonoBehaviour
     [Header("Important stuff")] 
     public int difficulty;
     public string activeSaveName = "";
-    public bool completedFirstSSVFLoad = false;
+    public bool completedFirstSSVFLoad;
 
     private void Start()
     {
