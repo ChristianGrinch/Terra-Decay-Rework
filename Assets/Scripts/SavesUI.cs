@@ -21,6 +21,7 @@ public class SavesUI : MonoBehaviour
     public Button step1PanelBtn;
     public Button step2PanelBtn;
     public Button createSaveBtn;
+    public Button playBtn;
     [Header("Panels")]
     public GameObject mainPanel;
     public GameObject savesPanel;
@@ -46,9 +47,11 @@ public class SavesUI : MonoBehaviour
     public TMP_Text difficultyTextStep2;
     public TMP_InputField saveNameInput;
     public TMP_Text selectedNameText;
+    public TMP_Text playBtnText;
+    public TMP_Text illegalCharactersWarningText;
     
-    public static string difficulty;
-    public static string saveName;
+    public string difficulty;
+    public string saveName;
     
     private void Start()
     {
@@ -58,8 +61,27 @@ public class SavesUI : MonoBehaviour
         difficultyDropdown.onValueChanged.AddListener(SelectDifficulty);
         saveNameInput.onSubmit.AddListener(SelectSaveName);
         createSaveBtn.onClick.AddListener(() => GameManager.Instance.CreateSave(saveName));
+        InitializeSaveButtons();
     }
 
+    public void InitializeSaveButtons()
+    {
+        foreach (var save in SaveSystem.FindSaves())
+        {
+            CreateSaveButton(save);
+        }
+    }
+
+    public void CreateSaveButton(string name)
+    {
+        instantiatedSavePrefab = Instantiate(savePrefab, contentPanel.transform);
+        instantiatedSavePrefab.GetComponentInChildren<TMP_Text>().text = name;
+        instantiatedSavePrefab.GetComponentInChildren<Button>().onClick.AddListener(() =>
+        {
+            GameManager.Instance.activeSaveName = name;
+            playBtnText.text = $"Play: {name}";
+        });
+    }
     private void SelectSaveName(string selectedName)
     {
         saveName = selectedName;

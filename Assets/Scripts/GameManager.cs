@@ -1,4 +1,6 @@
-using System;using TMPro;
+using System;
+using System.IO;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -26,13 +28,28 @@ public class GameManager : MonoBehaviour
     {
         LoadSettingsData();
     }
-
+    public static bool IsSaveNameValid(string saveName)
+    {
+        char[] invalidChars = Path.GetInvalidFileNameChars();
+        foreach (char c in invalidChars)
+        {
+            if (saveName.Contains(c.ToString()) || saveName == "")
+            {
+                return false;
+            }
+        }
+        return true;
+    }
     public void CreateSave(string selectedSaveName)
     {
-        activeSaveName = selectedSaveName;
-        SavesUI.Instance.instantiatedSavePrefab = Instantiate(SavesUI.Instance.savePrefab, SavesUI.Instance.contentPanel.transform);
-        SavesUI.Instance.saveText = SavesUI.Instance.instantiatedSavePrefab.GetComponentInChildren<TMP_Text>();
-        SaveSystem.CreateSave(selectedSaveName);
+        if (IsSaveNameValid(selectedSaveName))
+        {
+            SavesUI.Instance.illegalCharactersWarningText.gameObject.SetActive(false);
+            activeSaveName = selectedSaveName;
+            SavesUI.Instance.CreateSaveButton(selectedSaveName);
+            SaveSystem.CreateSave(selectedSaveName);
+        }
+        SavesUI.Instance.illegalCharactersWarningText.gameObject.SetActive(true);
     }
     public void SaveGame()
     {
