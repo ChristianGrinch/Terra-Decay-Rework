@@ -19,7 +19,14 @@ public class StartUI : MonoBehaviour
 
     private void StartGame()
     {
-        throw new NotImplementedException();
+        if (SaveSystem.FindSaves() == null)
+        {
+            PopupManager.Instance.OpenPopup(Popup.NoSavesRedirect);
+        }
+        else
+        {
+            throw new NotImplementedException();
+        }
     }
     private void ExitGame()
     {

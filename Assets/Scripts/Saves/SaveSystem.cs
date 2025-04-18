@@ -60,7 +60,7 @@ public static class SaveSystem
         if (files.Length == 0)
         {
             Debug.Log("No save files found.");
-            return new List<string>();
+            return null;
         }
 
         List<string> saveFileNames = new List<string>();
