@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     }
     public static bool IsSaveNameValid(string saveName)
     {
+        Debug.Log("IsSaveNameValid: " + saveName);
         char[] invalidChars = Path.GetInvalidFileNameChars();
         foreach (char c in invalidChars)
         {

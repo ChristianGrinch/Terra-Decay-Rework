@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,6 +23,7 @@ public class SavesUI : MonoBehaviour
     public Button step2PanelBtn;
     public Button createSaveBtn;
     public Button playBtn;
+    public Button deleteBtn;
     [Header("Panels")]
     public GameObject mainPanel;
     public GameObject savesPanel;
@@ -41,13 +43,16 @@ public class SavesUI : MonoBehaviour
     public GameObject hardDifficultyPrefab;
     public GameObject expertDifficultyPrefab;
     public GameObject instantiatedDifficultyPrefab;
+    [Header("Saves Panel")]
+    public TMP_Text playBtnText;
+    public TMP_Text deleteBtnText;
     [Header("Other")]
     public TMP_Dropdown difficultyDropdown;
     public TMP_Text  difficultyText;
     public TMP_Text difficultyTextStep2;
     public TMP_InputField saveNameInput;
     public TMP_Text selectedNameText;
-    public TMP_Text playBtnText;
+   
     public TMP_Text illegalCharactersWarningText;
     
     public string difficulty;
@@ -61,12 +66,29 @@ public class SavesUI : MonoBehaviour
         difficultyDropdown.onValueChanged.AddListener(SelectDifficulty);
         saveNameInput.onSubmit.AddListener(SelectSaveName);
         createSaveBtn.onClick.AddListener(() => GameManager.Instance.CreateSave(saveName));
+        deleteBtn.onClick.AddListener(() =>
+        {
+            if (GameManager.Instance.activeSaveName == "") return;
+            SaveSystem.DeleteSave(GameManager.Instance.activeSaveName);
+            
+            playBtn.gameObject.SetActive(false);
+            deleteBtn.gameObject.SetActive(false);
+            
+            InitializeSaveButtons();
+        });
         InitializeSaveButtons();
     }
 
     public void InitializeSaveButtons()
     {
-        foreach (var save in SaveSystem.FindSaves())
+        foreach (Transform save in contentPanel.transform)
+        {
+            Destroy(save.gameObject);
+        }
+        List<string> saves = SaveSystem.FindSaves();
+        if (saves == null) return;
+
+        foreach (var save in saves)
         {
             CreateSaveButton(save);
         }
@@ -79,7 +101,12 @@ public class SavesUI : MonoBehaviour
         instantiatedSavePrefab.GetComponentInChildren<Button>().onClick.AddListener(() =>
         {
             GameManager.Instance.activeSaveName = name;
-            playBtnText.text = $"Play: {name}";
+            
+            playBtn.gameObject.SetActive(true);
+            deleteBtn.gameObject.SetActive(true);
+            
+            playBtnText.text = $"Play '{name}'";
+            deleteBtnText.text = $"Delete '{name}'";
         });
     }
     private void SelectSaveName(string selectedName)
