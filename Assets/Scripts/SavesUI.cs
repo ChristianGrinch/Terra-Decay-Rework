@@ -46,14 +46,15 @@ public class SavesUI : MonoBehaviour
     [Header("Saves Panel")]
     public TMP_Text playBtnText;
     public TMP_Text deleteBtnText;
+    [Header("Warnings")]
+    public TMP_Text illegalCharactersWarningText;
+    public TMP_Text illegalSaveNameWarningText;
     [Header("Other")]
     public TMP_Dropdown difficultyDropdown;
     public TMP_Text  difficultyText;
     public TMP_Text difficultyTextStep2;
     public TMP_InputField saveNameInput;
     public TMP_Text selectedNameText;
-   
-    public TMP_Text illegalCharactersWarningText;
     
     public string difficulty;
     public string saveName;
@@ -63,8 +64,16 @@ public class SavesUI : MonoBehaviour
         goBackBtn.onClick.AddListener(() => UIManager.Instance.GoBack());
         step1PanelBtn.onClick.AddListener(() => OpenStepPanel(1));
         step2PanelBtn.onClick.AddListener(() => OpenStepPanel(2));
-        difficultyDropdown.onValueChanged.AddListener(SelectDifficulty);
-        saveNameInput.onSubmit.AddListener(SelectSaveName);
+        difficultyDropdown.onValueChanged.AddListener(diff =>
+        {
+            SelectDifficulty(diff);
+            DisplayCreateSaveBtnCheck();
+        });
+        saveNameInput.onEndEdit.AddListener(str=>
+        {
+            SelectSaveName(str);
+            DisplayCreateSaveBtnCheck();
+        }); 
         createSaveBtn.onClick.AddListener(() => GameManager.Instance.CreateSave(saveName));
         deleteBtn.onClick.AddListener(() =>
         {
@@ -76,9 +85,32 @@ public class SavesUI : MonoBehaviour
             
             InitializeSaveButtons();
         });
+        playBtn.onClick.AddListener(() => GameManager.Instance.LoadSave(GameManager.Instance.activeSaveName));
         InitializeSaveButtons();
     }
-
+    private void DisplayCreateSaveBtnCheck()
+    {
+        if (difficultyDropdown.value != 0)
+        {
+            // Return statement needed because the warning will show up every time
+            // after the user changes the difficulty otherwise
+            if (saveNameInput.text == "") return;
+            
+            if (GameManager.Instance.IsSaveNameValid(saveNameInput.text))
+            {
+                createSaveBtn.interactable = true;
+                illegalCharactersWarningText.gameObject.SetActive(false);
+            }
+            else
+            {
+                illegalCharactersWarningText.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            createSaveBtn.interactable = false;
+        }
+    }
     public void InitializeSaveButtons()
     {
         foreach (Transform save in contentPanel.transform)

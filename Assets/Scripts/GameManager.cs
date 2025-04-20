@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -28,7 +27,7 @@ public class GameManager : MonoBehaviour
     {
         LoadSettingsData();
     }
-    public static bool IsSaveNameValid(string saveName)
+    public bool IsSaveNameValid(string saveName)
     {
         Debug.Log("IsSaveNameValid: " + saveName);
         char[] invalidChars = Path.GetInvalidFileNameChars();
@@ -41,16 +40,26 @@ public class GameManager : MonoBehaviour
         }
         return true;
     }
+
+    public bool DoesSaveNameExist(string saveName)
+    {
+        return File.Exists(Application.persistentDataPath + "/" + saveName + ".svf");
+    }
     public void CreateSave(string selectedSaveName)
     {
+        if (DoesSaveNameExist(selectedSaveName))
+        {
+            SavesUI.Instance.illegalSaveNameWarningText.gameObject.SetActive(true);
+            return;
+        }
+        SavesUI.Instance.illegalSaveNameWarningText.gameObject.SetActive(false);
+            
         if (IsSaveNameValid(selectedSaveName))
         {
-            SavesUI.Instance.illegalCharactersWarningText.gameObject.SetActive(false);
             activeSaveName = selectedSaveName;
             SavesUI.Instance.CreateSaveButton(selectedSaveName);
             SaveSystem.CreateSave(selectedSaveName);
         }
-        SavesUI.Instance.illegalCharactersWarningText.gameObject.SetActive(true);
     }
     public void SaveGame()
     {
