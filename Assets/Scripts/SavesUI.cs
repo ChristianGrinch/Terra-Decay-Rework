@@ -24,6 +24,7 @@ public class SavesUI : MonoBehaviour
     public Button createSaveBtn;
     public Button playBtn;
     public Button deleteBtn;
+    public Button setDefaultBtn;
     [Header("Panels")]
     public GameObject mainPanel;
     public GameObject savesPanel;
@@ -46,6 +47,7 @@ public class SavesUI : MonoBehaviour
     [Header("Saves Panel")]
     public TMP_Text playBtnText;
     public TMP_Text deleteBtnText;
+    public TMP_Text setDefaultBtnText;
     [Header("Warnings")]
     public TMP_Text illegalCharactersWarningText;
     public TMP_Text illegalSaveNameWarningText;
@@ -58,6 +60,7 @@ public class SavesUI : MonoBehaviour
     
     public string difficulty;
     public string saveName;
+    public string defaultSVFName; // Only a thing so that SettingsData.FetchSettingsData() can be called like every modification to settings
     
     private void Start()
     {
@@ -82,10 +85,17 @@ public class SavesUI : MonoBehaviour
             
             playBtn.gameObject.SetActive(false);
             deleteBtn.gameObject.SetActive(false);
+            setDefaultBtn.gameObject.SetActive(false);
             
             InitializeSaveButtons();
         });
         playBtn.onClick.AddListener(() => GameManager.Instance.LoadSave(GameManager.Instance.activeSaveName));
+        setDefaultBtn.onClick.AddListener(() =>
+        {
+            defaultSVFName = GameManager.Instance.activeSaveName;
+            StartUI.Instance.playBtn.GetComponentInChildren<TMP_Text>().text = $"Play '{defaultSVFName}'";
+            GameManager.Instance.SaveSettings();
+        });
         InitializeSaveButtons();
     }
     private void DisplayCreateSaveBtnCheck()
@@ -139,6 +149,7 @@ public class SavesUI : MonoBehaviour
             
             playBtnText.text = $"Play '{name}'";
             deleteBtnText.text = $"Delete '{name}'";
+            setDefaultBtnText.text = $"Set  '{name}' as default save";
         });
     }
     private void SelectSaveName(string selectedName)

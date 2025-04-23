@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -85,6 +86,8 @@ public class GameManager : MonoBehaviour
         AudioSettings.Instance.ChangeMusicVolume(settingsData.musicVolume);
         VideoSettings.Instance.overallQualityDropdown.value = settingsData.overallQuality;
         ControlsSettings.Instance.controlKeys = settingsData.controlKeys;
+        SavesUI.Instance.defaultSVFName = settingsData.defaultSVFName;
+        StartUI.Instance.playBtn.GetComponentInChildren<TMP_Text>().text = $"Play '{settingsData.defaultSVFName}'";
         switch (completedFirstSSVFLoad)
         {
             case true:

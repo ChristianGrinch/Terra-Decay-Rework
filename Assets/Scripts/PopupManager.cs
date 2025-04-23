@@ -32,6 +32,7 @@ public class PopupManager : MonoBehaviour
     // ReSharper disable Unity.PerformanceAnalysis
     public void OpenPopup(Popup popup)
     {
+        if (instantiatedPopup) return; // Don't open another popup if one already exists
         switch (popup)
         {
             case Popup.QuitWithoutSaving:

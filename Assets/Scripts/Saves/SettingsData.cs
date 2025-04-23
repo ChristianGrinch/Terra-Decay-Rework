@@ -13,6 +13,8 @@ public class SettingsData
     [Key(20)] public int overallQuality;
     // Controls (Keys 40-69)
     [Key(40)] public Dictionary<Keys, KeyCode> controlKeys;
+    // Other Data (Keys > 100)
+    [Key(101)] public string defaultSVFName;
     
     public static SettingsData FetchSettingsData()
     {
@@ -22,6 +24,7 @@ public class SettingsData
             musicVolume = (int)AudioSettings.Instance.musicVolumeSlider.value,
             overallQuality = VideoSettings.Instance.overallQualityDropdown.value,
             controlKeys = ControlsSettings.Instance.controlKeys,
+            defaultSVFName = SavesUI.Instance.defaultSVFName
         };
     }
     public static SettingsData CreateDefaultSettingsData()
