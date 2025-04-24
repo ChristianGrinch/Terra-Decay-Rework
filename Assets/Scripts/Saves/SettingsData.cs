@@ -31,8 +31,8 @@ public class SettingsData
     {
         return new SettingsData
         {
-            masterVolume = 100,
-            musicVolume = 100,
+            masterVolume = 50,
+            musicVolume = 75,
             overallQuality = 3,
             controlKeys = ControlsSettings.Instance.ReturnDefaultControlKeys(),
         };

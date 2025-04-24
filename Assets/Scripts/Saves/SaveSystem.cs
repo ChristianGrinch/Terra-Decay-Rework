@@ -65,16 +65,15 @@ public static class SaveSystem
 
         List<string> saveFileNames = new List<string>();
 
-        for (int i = 0; i < files.Length; i++)
+        foreach (string filePath in files)
         {
-            string filePath = files[i];
-            if (File.Exists(filePath))
-            {
-                string saveName = Path.GetFileNameWithoutExtension(filePath);
-                saveFileNames.Add(saveName);
+	        if (File.Exists(filePath))
+	        {
+		        string saveName = Path.GetFileNameWithoutExtension(filePath);
+		        saveFileNames.Add(saveName);
 
-                //Debug.Log("Found save file: " + saveName);
-            }
+		        //Debug.Log("Found save file: " + saveName);
+	        }
         }
 
         return saveFileNames;
