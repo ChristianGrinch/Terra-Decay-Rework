@@ -59,8 +59,8 @@ public class SavesUI : MonoBehaviour
     public TMP_Text selectedNameText;
     public TMP_Text defaultSaveText;
     
-    public string difficulty;
-    public string saveName;
+    private string selectedDifficulty;
+    private string inputtedSaveName;
     public string defaultSVFName; // Only a thing so that SettingsData.FetchSettingsData() can be called like every modification to settings
     
     private void Start()
@@ -78,17 +78,15 @@ public class SavesUI : MonoBehaviour
             SelectSaveName(str);
             DisplayCreateSaveBtnCheck();
         }); 
-        createSaveBtn.onClick.AddListener(() => GameManager.Instance.CreateSave(saveName));
+        createSaveBtn.onClick.AddListener(() => GameManager.Instance.CreateSave(inputtedSaveName));
         deleteBtn.onClick.AddListener(() =>
         {
             if (GameManager.Instance.activeSaveName == "") return;
             SaveSystem.DeleteSave(GameManager.Instance.activeSaveName);
             
-            playBtn.gameObject.SetActive(false);
-            deleteBtn.gameObject.SetActive(false);
-            setDefaultBtn.gameObject.SetActive(false);
-            
+            ChangeModifierBtnsState();
             InitializeSaveButtons();
+            
             if (GameManager.Instance.activeSaveName == defaultSVFName)
             {
                 defaultSVFName = "";
@@ -105,8 +103,13 @@ public class SavesUI : MonoBehaviour
         });
         InitializeSaveButtons();
     }
-
-    public void UpdateDefaultSaveStuff()
+    private void ChangeModifierBtnsState()
+    {
+        playBtn.gameObject.SetActive(!playBtn.gameObject.activeSelf);
+        deleteBtn.gameObject.SetActive(!deleteBtn.gameObject.activeSelf);
+        setDefaultBtn.gameObject.SetActive(!setDefaultBtn.gameObject.activeSelf);
+    }
+    private void UpdateDefaultSaveStuff()
     {
         defaultSaveText.text = $"Default save: {defaultSVFName}";
         StartUI.Instance.playBtnText.text = defaultSVFName == "" ? "Play" : $"Play '{defaultSVFName}'";
@@ -134,7 +137,7 @@ public class SavesUI : MonoBehaviour
             createSaveBtn.interactable = false;
         }
     }
-    public void InitializeSaveButtons()
+    private void InitializeSaveButtons()
     {
         foreach (Transform save in contentPanel.transform)
         {
@@ -143,65 +146,63 @@ public class SavesUI : MonoBehaviour
         List<string> saves = SaveSystem.FindSaves();
         if (saves == null) return;
 
-        foreach (var save in saves)
+        foreach (string save in saves)
         {
             CreateSaveButton(save);
         }
     }
-
-    public void CreateSaveButton(string name)
+    public void CreateSaveButton(string saveName)
     {
         instantiatedSavePrefab = Instantiate(savePrefab, contentPanel.transform);
-        instantiatedSavePrefab.GetComponentInChildren<TMP_Text>().text = name;
+        instantiatedSavePrefab.GetComponentInChildren<TMP_Text>().text = saveName;
         instantiatedSavePrefab.GetComponentInChildren<Button>().onClick.AddListener(() =>
         {
-            GameManager.Instance.activeSaveName = name;
+            GameManager.Instance.activeSaveName = saveName;
+
+            if(!playBtn.gameObject.activeSelf) ChangeModifierBtnsState();
             
-            playBtn.gameObject.SetActive(true);
-            deleteBtn.gameObject.SetActive(true);
-            
-            playBtnText.text = $"Play '{name}'";
-            deleteBtnText.text = $"Delete '{name}'";
-            setDefaultBtnText.text = $"Set  '{name}' as default save";
+            playBtnText.text = $"Play '{saveName}'";
+            deleteBtnText.text = $"Delete '{saveName}'";
+            setDefaultBtnText.text = $"Set  '{saveName}' as default save";
         });
     }
     private void SelectSaveName(string selectedName)
     {
-        saveName = selectedName;
-        selectedNameText.text = $"Save Name: {saveName}";
+        inputtedSaveName = selectedName;
+        selectedNameText.text = $"Save Name: {inputtedSaveName}";
     }
-    private void SelectDifficulty(int selectedDifficulty)
+    private void SelectDifficulty(int inputtedDifficulty)
     {
-        switch (selectedDifficulty)
+        switch (inputtedDifficulty)
         {
             case 1:
-                difficulty = "Easy";
+                selectedDifficulty = "Easy";
                 Destroy(instantiatedDifficultyPrefab);
                 instantiatedDifficultyPrefab = Instantiate(easyDifficultyPrefab, difficultyPanel.transform);
                 break;
             case 2:
-                difficulty = "Medium";
+                selectedDifficulty = "Medium";
                 Destroy(instantiatedDifficultyPrefab);
                 instantiatedDifficultyPrefab = Instantiate(mediumDifficultyPrefab, difficultyPanel.transform);
                 break;
             case 3:
-                difficulty = "Hard";
+                selectedDifficulty = "Hard";
                 Destroy(instantiatedDifficultyPrefab);
                 instantiatedDifficultyPrefab = Instantiate(hardDifficultyPrefab, difficultyPanel.transform);
                 break;
             case 4:
-                difficulty = "Expert";
+                selectedDifficulty = "Expert";
                 Destroy(instantiatedDifficultyPrefab);
                 instantiatedDifficultyPrefab = Instantiate(expertDifficultyPrefab, difficultyPanel.transform);
                 break;
             default:
-                difficulty = "Unknown";
+                selectedDifficulty = "Unknown";
                 Debug.LogWarning("Unknown difficulty!");
                 Destroy(instantiatedDifficultyPrefab);
                 break;
         }
-        difficultyText.text = $"Selected difficulty: {difficulty}";
-        difficultyTextStep2.text = $"Selected difficulty: {difficulty}";
+        difficultyText.text = $"Selected difficulty: {selectedDifficulty}";
+        difficultyTextStep2.text = $"Selected difficulty: {selectedDifficulty}";
     }
     private void OpenStepPanel(int step)
     {
