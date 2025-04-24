@@ -22,11 +22,13 @@ public class StartUI : MonoBehaviour
     public Button settingsBtn;
     public Button savesBtn;
     public Button exitBtn;
+    [Header("Other")] 
+    public TMP_Text playBtnText;
     private void Start()
     {
         if (SavesUI.Instance.defaultSVFName != "")
         {
-            playBtn.GetComponentInChildren<TMP_Text>().text = $"Play '{SavesUI.Instance.defaultSVFName}'";
+            playBtnText.text = $"Play '{SavesUI.Instance.defaultSVFName}'";
         }
         
         playBtn.onClick.AddListener(StartGame);

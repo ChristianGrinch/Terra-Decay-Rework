@@ -57,6 +57,7 @@ public class SavesUI : MonoBehaviour
     public TMP_Text difficultyTextStep2;
     public TMP_InputField saveNameInput;
     public TMP_Text selectedNameText;
+    public TMP_Text defaultSaveText;
     
     public string difficulty;
     public string saveName;
@@ -88,15 +89,27 @@ public class SavesUI : MonoBehaviour
             setDefaultBtn.gameObject.SetActive(false);
             
             InitializeSaveButtons();
+            if (GameManager.Instance.activeSaveName == defaultSVFName)
+            {
+                defaultSVFName = "";
+                UpdateDefaultSaveStuff();
+                GameManager.Instance.SaveSettings(); // Deleting/changing the default save with NOT save without this
+            }
         });
         playBtn.onClick.AddListener(() => GameManager.Instance.LoadSave(GameManager.Instance.activeSaveName));
         setDefaultBtn.onClick.AddListener(() =>
         {
             defaultSVFName = GameManager.Instance.activeSaveName;
-            StartUI.Instance.playBtn.GetComponentInChildren<TMP_Text>().text = $"Play '{defaultSVFName}'";
+            UpdateDefaultSaveStuff();
             GameManager.Instance.SaveSettings();
         });
         InitializeSaveButtons();
+    }
+
+    public void UpdateDefaultSaveStuff()
+    {
+        defaultSaveText.text = $"Default save: {defaultSVFName}";
+        StartUI.Instance.playBtnText.text = defaultSVFName == "" ? "Play" : $"Play '{defaultSVFName}'";
     }
     private void DisplayCreateSaveBtnCheck()
     {

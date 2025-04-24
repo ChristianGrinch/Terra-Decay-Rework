@@ -84,10 +84,15 @@ public class GameManager : MonoBehaviour
         
         AudioSettings.Instance.ChangeMasterVolume(settingsData.masterVolume);
         AudioSettings.Instance.ChangeMusicVolume(settingsData.musicVolume);
+        
         VideoSettings.Instance.overallQualityDropdown.value = settingsData.overallQuality;
+        
         ControlsSettings.Instance.controlKeys = settingsData.controlKeys;
+        
         SavesUI.Instance.defaultSVFName = settingsData.defaultSVFName;
-        StartUI.Instance.playBtn.GetComponentInChildren<TMP_Text>().text = $"Play '{settingsData.defaultSVFName}'";
+        StartUI.Instance.playBtnText.text = settingsData.defaultSVFName == "" ? "Play" : $"Play '{settingsData.defaultSVFName}'";
+        SavesUI.Instance.defaultSaveText.text = $"Default save: {settingsData.defaultSVFName}";
+        
         switch (completedFirstSSVFLoad)
         {
             case true:
