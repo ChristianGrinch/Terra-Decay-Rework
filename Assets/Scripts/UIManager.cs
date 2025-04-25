@@ -9,6 +9,7 @@ public enum Menu
     Start,
     Settings,
     Saves,
+    Game
 }
 public class UIManager : MonoBehaviour
 {
@@ -42,21 +43,15 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        try // I don't remember why this is a thing, but it's needed for something 💖
+        if (Input.GetKeyDown(ControlsSettings.Instance.controlKeys[Keys.GoBack]))
         {
-            if (Input.GetKeyDown(ControlsSettings.Instance.controlKeys[Keys.GoBack]))
+            // Needed because the settings menu must check for changes before just going back
+            if (ReturnCurrentMenu() == Menu.Settings) 
             {
-                if (ReturnCurrentMenu() == Menu.Settings)
-                {
-                    SettingsUI.Instance.GoBack();
-                    return;
-                }
-                GoBack();
+                SettingsUI.Instance.GoBack();
+                return;
             }
-        }
-        catch
-        {
-            // ignored
+            GoBack();
         }
     }
 

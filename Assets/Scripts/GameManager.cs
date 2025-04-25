@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     public string difficulty = "";
     public string activeSaveName = "";
     public bool completedFirstSSVFLoad;
+    public GameObject player;
 
     private void Start()
     {
@@ -71,6 +72,7 @@ public class GameManager : MonoBehaviour
         GameSaveData gameSaveData = SaveSystem.LoadGame(selectedSaveName);
         
         throw new NotImplementedException();
+        LocatePlayer();
     }
 
     public void SaveSettings()
@@ -108,5 +110,9 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
-    
+
+    private void LocatePlayer()
+    {
+        player = GameObject.FindWithTag("Player");
+    }
 }
